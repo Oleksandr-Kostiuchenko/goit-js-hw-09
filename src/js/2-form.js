@@ -13,14 +13,15 @@ let formData = {
 //* Fill form
 const fillForm = () => {
     try{
-        if(localStorage.length !== 0){
-            const formDataLS = JSON.parse(localStorage.getItem('feedback-form-state'));
-            
-            formData = formDataLS;
-
-            for(let key in formDataLS){
-                feedbackForm.elements[key].value = formDataLS[key];
-            }
+        const formDataLS = JSON.parse(localStorage.getItem('feedback-form-state'));
+        
+        if(formDataLS === null){
+            return;
+        }
+        
+        formData = formDataLS;
+        for(let key in formDataLS){
+            feedbackForm.elements[key].value = formDataLS[key];
         }
     } catch (err){
         console.log(err);
@@ -53,7 +54,7 @@ const onFormSubmit = event => {
         alert('Fill please all fields');
         return;
     }else {
-        localStorage.clear();
+        localStorage.removeItem('feedback-form-state');
         console.log(formData);
 
         formData = {
